@@ -1,0 +1,14 @@
+/* src/App.module.css */
+.appContainer {
+  position: relative;
+  width: 100vw;
+  min-height: 100vh;
+  overflow-y: auto;
+  
+  /* This padding pushes your page content (video, etc.) down
+     so it doesn't get hidden underneath the 70px fixed header.
+  */
+  padding-top: 70px; 
+  
+  box-sizing: border-box; 
+}

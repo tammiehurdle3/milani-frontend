@@ -1,0 +1,226 @@
+/* --- LAYOUT --- */
+.pageContainer {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #FAFAF9; /* Warm Stone */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.modalWrapper {
+  width: 100%;
+  max-width: 500px;
+  background: #FFFFFF;
+  border: 1px solid #E5E5E5;
+  border-radius: 4px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.modalHeader {
+  padding: 1.5rem;
+  border-bottom: 1px solid #E5E5E5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  color: #1C1917;
+  letter-spacing: 0.05em;
+}
+
+.closeBtn {
+  background: none; border: none; cursor: pointer; color: #A8A29E; font-size: 1.2rem;
+  transition: color 0.2s;
+}
+.closeBtn:hover { color: #1C1917; }
+
+.modalBody { padding: 2rem; }
+
+/* --- TYPOGRAPHY --- */
+.pageTitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: #1C1917;
+  margin-bottom: 0.5rem;
+}
+
+.pageSubtitle {
+  color: #57534E; font-size: 0.95rem; line-height: 1.5; margin-bottom: 2rem;
+  text-align: center;
+}
+
+.sectionTitle {
+  font-size: 1.5rem; font-weight: 600; color: #1C1917; margin-bottom: 0.5rem;
+}
+
+.instruction { color: #57534E; font-size: 0.9rem; margin-bottom: 1.5rem; text-align: center; }
+
+/* --- WELCOME SCREEN --- */
+.centerContent {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+}
+
+.iconRing {
+  width: 80px; height: 80px; border-radius: 50%;
+  border: 1px solid #E5E5E5;
+  display: flex; align-items: center; justify-content: center;
+  color: #C5A059; /* GOLD ICON */
+  margin-bottom: 1.5rem;
+}
+
+.infoGrid {
+  width: 100%; display: grid; gap: 1rem; margin-bottom: 2rem; text-align: left;
+}
+
+.infoCard {
+  padding: 1rem; border: 1px solid #F5F5F4; border-radius: 4px;
+  display: flex; gap: 1rem; align-items: flex-start;
+}
+
+.smallIcon { color: #C5A059; }
+
+.infoCard h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.2rem; }
+.infoCard p { font-size: 0.8rem; color: #57534E; margin: 0; }
+
+/* --- CAMERA --- */
+.cameraFrame {
+  width: 100%;
+  aspect-ratio: 3/4; /* Portrait Ratio standard for mobile webcams */
+  background: #000;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.video { width: 100%; height: 100%; object-fit: cover; }
+
+.overlay {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
+}
+
+/* ID CARD GUIDE - FIXED ASPECT RATIO */
+.idGuide {
+  width: 85%; /* Take up most of width */
+  aspect-ratio: 1.586; /* EXACT CREDIT CARD RATIO (Rectangle) */
+  border: 2px solid #FFFFFF; 
+  border-radius: 8px;
+  box-shadow: 0 0 0 999px rgba(0,0,0,0.5); /* Darken outside */
+}
+
+/* SELFIE + ID GUIDE LAYOUT */
+.selfieGuide {
+  position: relative; width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; 
+  justify-content: center; 
+}
+
+.faceOval {
+  width: 160px; height: 220px; 
+  border: 2px dashed #FFFFFF; 
+  border-radius: 50%;
+  box-shadow: 0 0 0 999px rgba(0,0,0,0.5);
+  /* Move face up slightly to make room for ID below */
+  transform: translateY(-10%);
+}
+
+/* HAND ID GUIDE - FIXED RECTANGLE BELOW CHIN */
+.idHandGuide {
+  width: 180px; /* Fixed width to ensure readability */
+  aspect-ratio: 1.586; /* Force Rectangle Shape */
+  border: 2px solid #C5A059; /* GOLD BORDER */
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(2px);
+  display: flex; align-items: center; justify-content: center;
+  
+  /* Text Styling */
+  color: #FFFFFF; font-weight: 700; font-size: 0.7rem;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  
+  /* Positioning */
+  position: absolute; 
+  bottom: 15%; /* Sits in the lower area */
+}
+
+.shutterBtn {
+  width: 70px; height: 70px; border-radius: 50%;
+  background: #FFFFFF; border: 4px solid #E5E5E5;
+  cursor: pointer; transition: transform 0.1s;
+  display: flex; align-items: center; justify-content: center;
+}
+.shutterBtn::after {
+  content: ''; width: 56px; height: 56px; background: #C5A059; border-radius: 50%; display: block;
+}
+.shutterBtn:active { transform: scale(0.95); }
+
+/* --- REVIEW --- */
+.reviewFrame {
+  width: 100%; margin-bottom: 2rem; border-radius: 4px; overflow: hidden; border: 1px solid #E5E5E5;
+}
+.reviewImg { width: 100%; display: block; }
+
+/* --- FORMS (W9) --- */
+.w9Container { width: 100%; }
+.formGrid { display: flex; flex-direction: column; gap: 1rem; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+.inputGroup { display: flex; flex-direction: column; gap: 0.5rem; }
+.label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #1C1917; }
+.input {
+  padding: 0.8rem; border: 1px solid #E5E5E5; border-radius: 2px;
+  font-size: 0.9rem; transition: 0.2s;
+}
+.input:focus { border-color: #C5A059; outline: none; }
+
+.checkboxGroup { display: flex; gap: 0.75rem; align-items: flex-start; margin-top: 1rem; }
+.checkbox { margin-top: 0.2rem; accent-color: #C5A059; }
+.checkLabel { font-size: 0.8rem; color: #57534E; line-height: 1.4; }
+
+/* --- BUTTONS --- */
+.primaryBtn {
+  background: #1C1917; color: #FFF; padding: 1rem 2rem;
+  border: none; border-radius: 2px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  cursor: pointer; transition: 0.2s; width: 100%;
+}
+.primaryBtn:hover { background: #C5A059; }
+.primaryBtn:disabled { background: #D6D3D1; cursor: not-allowed; }
+
+.secondaryBtn {
+  background: transparent; color: #1C1917; padding: 1rem 2rem;
+  border: 1px solid #E5E5E5; border-radius: 2px; font-weight: 600;
+  cursor: pointer; transition: 0.2s;
+}
+.secondaryBtn:hover { border-color: #1C1917; }
+
+.actionRow { display: flex; gap: 1rem; width: 100%; justify-content: center; margin-top: 1rem; }
+
+/* --- UTILS --- */
+.spinner {
+  width: 40px; height: 40px; border: 3px solid #F5F5F4;
+  border-top-color: #C5A059; border-radius: 50%;
+  animation: spin 1s linear infinite; margin-bottom: 1rem;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.statusBadge {
+  margin: 2rem 0; padding: 0.5rem 1rem; background: #FEFCE8; color: #C5A059;
+  font-size: 0.8rem; border-radius: 20px; border: 1px solid #FDE047;
+}
+
+.processingTitle {
+    font-size: 1.2rem; font-weight: 600; color: #1C1917; margin-bottom: 0.5rem;
+}

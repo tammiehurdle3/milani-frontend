@@ -1,0 +1,64 @@
+/* This is the "track" for the scroll. 
+   It's 400vh tall (4 panels * 100vh) to give you 
+   4 "screens" worth of scroll time. */
+.scrollContainer {
+  height: 400vh; 
+  position: relative;
+  background-color: white; /* The "white page" */
+}
+
+/* This holds the horizontal content and sticks to the top of the screen */
+.stickyWrapper {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden; /* This is crucial! */
+}
+
+/* This is the horizontal row of panels.
+   It's 400% wide (4 panels * 100% width) */
+.horizontalTrack {
+  display: flex;
+  width: 400%; 
+  height: 100%;
+}
+
+/* Each panel takes up 1/4 of the track (100vw) */
+.panel {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  box-sizing: border-box; /* Important */
+}
+
+.panel img {
+  width: 90%;
+  height: 90%;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+/* Specific styles for the text panel */
+.textPanel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: black;
+  max-width: 600px;
+}
+
+.textPanel h2 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.textPanel p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+}

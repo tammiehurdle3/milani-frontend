@@ -1,0 +1,309 @@
+/* --- VARIABLES & FONTS --- */
+/* Note: Ensure you have a Serif font available. 
+   We use a stack: Playfair Display -> Georgia -> Serif 
+*/
+
+.pageWrapper {
+  width: 100%;
+  min-height: 100vh;
+  padding-top: 80px;
+  background-color: #FAFAF9; /* Warm Stone Background */
+  color: #1C1917; /* Rich Black Text */
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+
+/* --- HERO LAYOUT --- */
+.heroSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column-reverse; /* Mobile: Text below visual */
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  max-width: 1600px;
+  margin: 0 auto;
+  gap: 4rem;
+}
+
+@media (min-width: 1024px) {
+  .heroSection {
+    flex-direction: row; /* Desktop: Text left, Visual right */
+    padding: 4rem 5rem;
+    height: calc(100vh - 140px);
+    gap: 6rem;
+  }
+}
+
+/* --- TEXT COLUMN --- */
+.textColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  z-index: 10;
+  width: 100%;
+}
+
+/* Badge (Line + Text) */
+.badgeWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.badgeLine {
+  height: 1px;
+  width: 30px;
+  background-color: #1C1917;
+}
+
+.badgeText {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #1C1917;
+}
+
+/* Headline Typography */
+.headline {
+  font-size: 3.5rem;
+  line-height: 0.95;
+  color: #1C1917;
+  letter-spacing: -0.02em;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .headline { font-size: 5.5rem; }
+}
+
+@media (min-width: 1280px) {
+  .headline { font-size: 7rem; }
+}
+
+.lineBold {
+  font-weight: 800;
+  display: block;
+}
+
+.lineSerif {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-weight: 300;
+  font-style: italic;
+  display: block;
+  margin-top: 0.1em;
+}
+
+/* Subhead */
+.subhead {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: #57534E; /* Warm Gray */
+  max-width: 460px;
+  margin-bottom: 3rem;
+  font-weight: 300;
+}
+
+/* --- BUTTONS --- */
+.ctaGroup {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .ctaGroup {
+    flex-direction: row;
+    width: auto;
+  }
+}
+
+/* Primary Button (Black -> Gold Hover) */
+.primaryButton {
+  background-color: #1C1917;
+  color: #FAFAF9;
+  padding: 1rem 2.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  text-decoration: none;
+  transition: all 0.5s ease;
+  border: 1px solid #1C1917;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.primaryButton:hover {
+  background-color: #C5A059; /* Champagne Gold */
+  border-color: #C5A059;
+  transform: translateY(-1px);
+}
+
+/* Secondary Button (Outline) */
+.secondaryButton {
+  background-color: transparent;
+  color: #1C1917;
+  padding: 1rem 2.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  text-decoration: none;
+  transition: all 0.5s ease;
+  border: 1px solid #1C1917;
+  text-align: center;
+}
+
+.secondaryButton:hover {
+  background-color: #1C1917;
+  color: #FAFAF9;
+}
+
+/* --- VISUAL COLUMN --- */
+.visualColumn {
+  flex: 1;
+  width: 100%;
+  min-height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 1rem;
+}
+
+/* The Thin Editorial Frame */
+.visualFrame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid #E7E5E0;
+  margin: 1rem;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.visualContent {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 10;
+  background-color: #FFFFFF;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.03);
+}
+
+.visualOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #FAFAF9;
+  opacity: 0.1;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* Floating Label */
+.floatingLabel {
+  position: absolute;
+  bottom: -1.5rem;
+  left: -1.5rem;
+  background-color: #C5A059;
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.5rem 1.5rem;
+  z-index: 20;
+  box-shadow: 0 5px 15px rgba(197, 160, 89, 0.3);
+}
+
+/* Placeholder Styling */
+.placeholderState {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F5F5F4;
+  border: 1px solid #E7E5E0;
+}
+
+.placeholderContent {
+  text-align: center;
+}
+
+.placeholderIcon {
+  font-size: 2rem;
+  color: #C5A059;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.placeholderText {
+  font-size: 0.6rem;
+  font-family: serif;
+  font-style: italic;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #78716C;
+}
+
+/* --- MARQUEE SECTION --- */
+.marqueeSection {
+  border-top: 1px solid #E7E5E0;
+  border-bottom: 1px solid #E7E5E0;
+  padding: 1.5rem 0;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  z-index: 20;
+  background-color: #FAFAF9;
+}
+
+.marqueeTrack {
+  display: inline-flex;
+  animation: marquee 60s linear infinite; /* Slow, elegant scroll */
+}
+
+.marqueeGroup {
+  display: flex;
+  align-items: center;
+}
+
+.marqueeItem {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #1C1917;
+  padding: 0 3rem;
+}
+
+.marqueeDot {
+  height: 4px;
+  width: 4px;
+  background-color: #C5A059;
+  border-radius: 50%;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}

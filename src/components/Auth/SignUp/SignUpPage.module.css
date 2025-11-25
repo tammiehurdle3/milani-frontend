@@ -1,0 +1,191 @@
+/* --- LAYOUT --- */
+.splitLayout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #FAFAF9;
+  font-family: 'Inter', sans-serif;
+  padding-top: 0;
+}
+
+/* --- LEFT COLUMN (ART) --- */
+.artColumn {
+  display: none;
+  width: 50%;
+  background-color: #1C1917; /* Dark backing for the art */
+  position: relative;
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .artColumn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.imageWrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.vectorArt {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.85; /* Slight dim for luxury feel */
+}
+
+.grainOverlay {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.05; 
+  mix-blend-mode: overlay;
+}
+
+.artOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 5rem;
+  z-index: 10;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+}
+
+.artHeading {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #FFFFFF;
+  letter-spacing: -0.02em;
+}
+
+.artSubtext {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 0.05em;
+  font-weight: 300;
+}
+
+/* --- RIGHT COLUMN (FORM) --- */
+.formColumn {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background-color: #FFFFFF;
+}
+
+.formContent {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* HEADER */
+.headerGroup { text-align: left; margin-bottom: 1.5rem; }
+
+.title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.75rem;
+  color: #1C1917;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.subtitle { 
+  color: #78716C; 
+  font-size: 1rem; 
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* FORM ELEMENTS */
+.form { display: flex; flex-direction: column; gap: 1.5rem; }
+
+.inputGroup { display: flex; flex-direction: column; gap: 0.75rem; }
+
+.label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #A8A29E;
+}
+
+.input {
+  padding: 1rem 0; /* Minimal underlining style */
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #E5E5E5;
+  border-radius: 0;
+  font-size: 1.1rem;
+  color: #1C1917;
+  font-family: 'Playfair Display', serif; /* Input text feels editorial */
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.input:focus {
+  border-color: #D4AF37; /* Milani Gold */
+  padding-left: 10px; /* Subtle slide on focus */
+}
+
+.input::placeholder {
+  color: #D6D3D1;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+}
+
+.submitButton {
+  margin-top: 2rem;
+  padding: 1.2rem;
+  background-color: #1C1917;
+  color: #FFFFFF;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.75rem;
+  border: 1px solid #1C1917;
+  border-radius: 0; /* Editorial sharp edges */
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.submitButton:hover { 
+  background-color: #FFFFFF; 
+  color: #1C1917; 
+}
+
+.submitButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* FOOTER */
+.footer { 
+  text-align: center; 
+  font-size: 0.85rem; 
+  color: #A8A29E; 
+  margin-top: 2rem; 
+}
+
+.loginLink {
+  background: none; border: none; padding: 0; margin-left: 0.5rem;
+  color: #1C1917; font-weight: 600; cursor: pointer; 
+  border-bottom: 1px solid #1C1917;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  transition: color 0.2s;
+}
+.loginLink:hover { color: #D4AF37; border-color: #D4AF37; }

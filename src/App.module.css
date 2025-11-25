@@ -1,0 +1,11 @@
+/* src/App.module.css */
+.appContainer {
+  position: relative; 
+  width: 100vw;
+  
+  /* --- FIX --- */
+  min-height: 100vh; /* Use min-height so it can grow taller */
+  overflow-y: auto;   /* Use auto to allow vertical scrolling */
+  /* Do NOT use overflow: hidden; */
+}
+

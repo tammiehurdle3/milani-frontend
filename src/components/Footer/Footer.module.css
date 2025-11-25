@@ -1,0 +1,33 @@
+/* src/components/Footer/Footer.module.css - Updated */
+
+.footer {
+  position: absolute; /* Position OVER other content */
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;        /* Ensure it's above LandingPage (z-index 0 to 3) */
+  padding: 20px 40px; /* Add padding here for spacing */
+  box-sizing: border-box;
+  background: transparent;
+  text-align: center;
+  pointer-events: auto; /* Make footer interactive */
+}
+
+.footer p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.75rem;
+  font-family: sans-serif; /* Replace with your font */
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.footer a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  margin: 0 10px;
+  pointer-events: auto; /* Ensure links are clickable */
+}
+
+.footer a:hover {
+  color: white;
+}
