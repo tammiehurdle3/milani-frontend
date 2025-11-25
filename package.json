@@ -37,6 +37,7 @@
     "vite": "^6.0.0"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "4.28.0"
+    "@rollup/rollup-linux-x64-gnu": "4.28.0",
+    "lightningcss-darwin-arm64": "1.22.1"
   }
 }

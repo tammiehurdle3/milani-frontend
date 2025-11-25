@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion'; // Smooth entrance
 import styles from './LoginPage.module.css';
+// Import Eye Icons
+import { Eye, EyeOff } from 'lucide-react';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8001';
 
@@ -8,6 +10,8 @@ const LoginPage = ({ onNavigate }) => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionStatus, setSubmissionStatus] = useState({ message: '', type: '' });
+  // State for password visibility
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,7 +32,7 @@ const LoginPage = ({ onNavigate }) => {
 
     try {
       // Connects to your Django Localhost 8001
-      const response = await fetch('${API_URL}/api/auth/login/', {
+      const response = await fetch(`${API_URL}/api/auth/login/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -107,15 +111,34 @@ const LoginPage = ({ onNavigate }) => {
 
             <div className={styles.inputGroup}>
               <label className={styles.label}>Password</label>
-              <input 
-                type="password" 
-                name="password" 
-                value={formData.password} 
-                onChange={handleChange} 
-                className={styles.input}
-                placeholder="••••••••" 
-                required
-              />
+              <div style={{ position: 'relative' }}>
+                <input 
+                  type={showPassword ? "text" : "password"} 
+                  name="password" 
+                  value={formData.password} 
+                  onChange={handleChange} 
+                  className={styles.input}
+                  placeholder="••••••••" 
+                  required
+                  style={{ width: '100%', paddingRight: '40px' }} // Make room for the icon
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  style={{
+                    position: 'absolute',
+                    right: '10px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    color: '#A8A29E'
+                  }}
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
             </div>
 
             {/* ERROR / SUCCESS MESSAGE */}
