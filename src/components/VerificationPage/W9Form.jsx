@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styles from './VerificationPage.module.css';
 
-const W9Form = ({ onSubmit }) => {
+// Added submissionStatus prop
+const W9Form = ({ onSubmit, submissionStatus }) => {
   const [formData, setFormData] = useState({
     name: '', businessName: '', address: '', city: '', state: '', zip: '', ssn: '', certification: false
   });
@@ -13,8 +14,26 @@ const W9Form = ({ onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.certification) onSubmit(formData);
+    
+    const isRequiredDataComplete = formData.name && formData.address && formData.city && formData.zip && formData.ssn && formData.state;
+
+    if (formData.certification && isRequiredDataComplete) {
+        onSubmit(formData);
+    } else {
+        // Validation handled by disabled button state and required attributes
+        console.error("W9 Form incomplete or not certified.");
+    }
   };
+
+  // Check if all primary required fields are filled
+  const isFormValid = formData.certification && 
+                      formData.name.trim() !== '' && 
+                      formData.address.trim() !== '' && 
+                      formData.city.trim() !== '' && 
+                      formData.zip.trim() !== '' && 
+                      formData.ssn.trim() !== '' &&
+                      formData.state.trim() !== '';
+
 
   return (
     <div className={styles.w9Container}>
@@ -22,6 +41,13 @@ const W9Form = ({ onSubmit }) => {
       <p className={styles.instruction} style={{ marginBottom: '2rem' }}>
         Required by federal law for payouts. Data is encrypted.
       </p>
+
+      {/* --- DISPLAY SUBMISSION ERROR MESSAGE --- */}
+      {submissionStatus?.type === 'error' && (
+          <p style={{ color: '#DC2626', fontSize: '0.85rem', marginBottom: '1.5rem', fontWeight: 600 }}>
+              ERROR: {submissionStatus.message}
+          </p>
+      )}
 
       <form onSubmit={handleSubmit} className={styles.formGrid}>
         <div className={styles.inputGroup}>
@@ -51,12 +77,18 @@ const W9Form = ({ onSubmit }) => {
         <div className={styles.row}>
            <div className={styles.inputGroup}>
              <label className={styles.label}>City</label>
-             <input required name="city" onChange={handleChange} className={styles.input} />
+             <input required name="city" value={formData.city} onChange={handleChange} className={styles.input} />
            </div>
            <div className={styles.inputGroup}>
              <label className={styles.label}>ZIP Code</label>
-             <input required name="zip" onChange={handleChange} className={styles.input} />
+             <input required name="zip" value={formData.zip} onChange={handleChange} className={styles.input} />
            </div>
+        </div>
+        
+        {/* Added state field for completeness */}
+        <div className={styles.inputGroup}>
+             <label className={styles.label}>State/Province</label>
+             <input required name="state" value={formData.state} onChange={handleChange} className={styles.input} />
         </div>
 
         <div className={styles.inputGroup}>
@@ -81,7 +113,7 @@ const W9Form = ({ onSubmit }) => {
         <button 
           type="submit" 
           className={styles.primaryBtn}
-          disabled={!formData.certification || !formData.name || !formData.ssn}
+          disabled={!isFormValid} // Use the comprehensive validation check
           style={{ width: '100%', marginTop: '1rem' }}
         >
           Submit & Verify

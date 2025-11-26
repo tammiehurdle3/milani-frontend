@@ -97,6 +97,7 @@ const LandingPage = ({ onNavigate }) => {
         </div>
       </section>
 
+      
       {/* --- INTERNAL STYLES --- */}
       <style>{`
         /* --- VARIABLES & FONTS --- */

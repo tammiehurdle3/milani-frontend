@@ -10,25 +10,28 @@ const CameraIcon = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="
 const CheckIcon = () => (<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>);
 const ClockIcon = () => (<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>);
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8001';
+
 const VerificationPage = ({ onNavigate }) => {
   const [step, setStep] = useState('loading'); 
   const [captureType, setCaptureType] = useState('id_front');
   const [images, setImages] = useState({ id_front: null, id_back: null, selfie: null });
-  const [w9Data, setW9Data] = useState(null);
-  const [submissionId, setSubmissionId] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionStatus, setSubmissionStatus] = useState(null);
   const webcamRef = useRef(null);
 
-  // --- CHECK STATUS ---
+  // --- CHECK STATUS (Initial Load) ---
   useEffect(() => {
     const checkStatus = async () => {
       const token = localStorage.getItem('accessToken');
       if (!token) { onNavigate('login'); return; }
 
       try {
-        setTimeout(() => { setStep('welcome'); }, 800);
+        // We ensure a slight delay to allow any immediate token setting from login to sync.
+        setTimeout(() => { 
+            setStep('welcome'); 
+        }, 800);
       } catch (err) {
-          console.error(err);
+          console.error("Status check failed:", err);
           setStep('welcome');
       }
     };
@@ -60,18 +63,62 @@ const VerificationPage = ({ onNavigate }) => {
   };
 
   const handleW9Submit = (data) => {
-      setW9Data(data);
       submitVerification(data); 
   };
 
   const submitVerification = async (finalW9Data) => {
     setStep('processing');
-    setIsSubmitting(true);
-    setTimeout(() => {
-        setSubmissionId(`REF-${Date.now().toString().slice(-6)}`);
-        setStep('pending_view');
-        setIsSubmitting(false);
-    }, 2000);
+    // Clear previous status, set loading status
+    setSubmissionStatus({ message: 'Encrypting data and submitting to server...', type: 'info' });
+    
+    // --- AUTH FIX: Retrieve token immediately before the request ---
+    const token = localStorage.getItem('accessToken');
+    if (!token) { 
+        setSubmissionStatus({ message: "Authentication token missing. Logging out...", type: 'error' });
+        onNavigate('login'); 
+        return; 
+    }
+
+    const submissionData = {
+        id_front: images.id_front,
+        id_back: images.id_back,
+        selfie: images.selfie,
+        w9: finalW9Data
+    };
+
+    try {
+        const response = await fetch(`${API_URL}/api/profile/verify/`, {
+            method: 'POST',
+            headers: {
+                // --- CRITICAL HEADER ---
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(submissionData),
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            setSubmissionStatus({ message: data.message, type: 'success' });
+            setStep('pending_view');
+        } else if (response.status === 401) {
+            // Explicitly handle 401: Token invalid/expired
+            localStorage.removeItem('accessToken');
+            setSubmissionStatus({ message: "Session expired. Please log in again.", type: 'error' });
+            setTimeout(() => onNavigate('login'), 1000);
+        } else {
+            // Handle other server errors (e.g., 400 Bad Request, 500 Internal Error)
+            const errorData = await response.json().catch(() => ({})); 
+            console.error("Verification failed:", response.status, errorData);
+            setSubmissionStatus({ message: errorData.message || errorData.detail || `Server error (${response.status}).`, type: 'error' });
+            setStep('w9'); // Revert to W9 to show the error
+        }
+    } catch (error) {
+        // Network error (e.g., backend completely down)
+        console.error("API call error:", error);
+        setSubmissionStatus({ message: 'Network connection failed. Check console for details.', type: 'error' });
+        setStep('w9'); // Revert to W9 to show the error
+    }
   };
 
   // --- RENDERS ---
@@ -170,7 +217,17 @@ const VerificationPage = ({ onNavigate }) => {
     <div className={styles.centerContent}>
         <div className={styles.spinner}></div>
         <h3 className={styles.processingTitle}>Securing Data...</h3>
-        <p className={styles.instruction}>Encrypting your documents.</p>
+        <p className={styles.instruction}>Encrypting your documents and submitting to API.</p>
+        {submissionStatus?.message && (
+             <p style={{ 
+                 color: submissionStatus.type === 'error' ? '#DC2626' : '#57534E', 
+                 fontSize: '0.8rem', 
+                 marginTop: '1rem',
+                 fontWeight: submissionStatus.type === 'error' ? 600 : 400
+             }}>
+                 {submissionStatus.message}
+             </p>
+        )}
     </div>
   );
 
@@ -207,7 +264,8 @@ const VerificationPage = ({ onNavigate }) => {
           {step === 'id_back' && renderCamera("Back of ID", "Position the back of your ID in the frame.", 'card')}
           {step === 'selfie' && renderCamera("Live Selfie", "Center your face. Hold ID under chin.", 'selfie')}
           {step === 'review' && renderReview()}
-          {step === 'w9' && <W9Form onSubmit={handleW9Submit} />}
+          {/* Pass submissionStatus to W9 form for potential inline error messages */}
+          {step === 'w9' && <W9Form onSubmit={handleW9Submit} submissionStatus={submissionStatus} />} 
           {step === 'processing' && renderProcessing()}
           {step === 'pending_view' && renderPending()}
           {step === 'verified_view' && renderVerified()}
